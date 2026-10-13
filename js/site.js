@@ -179,6 +179,8 @@
 
     var press = function (name, value) {
       state[name] = value;
+      var sel = filters.querySelector('[data-filter-select="' + name + '"]');
+      if (sel) sel.value = value;
       filters.querySelectorAll('[data-filter="' + name + '"]').forEach(function (b) {
         b.setAttribute("aria-pressed", String(b.getAttribute("data-value") === value));
       });
@@ -189,6 +191,9 @@
       if (!b) return;
       press(b.getAttribute("data-filter"), b.getAttribute("data-value"));
       apply();
+    });
+    filters.querySelectorAll("[data-filter-select]").forEach(function (sel) {
+      sel.addEventListener("change", function () { press(sel.getAttribute("data-filter-select"), sel.value); apply(); });
     });
     var reset = document.querySelector("[data-reset]");
     if (reset) reset.addEventListener("click", function () { press("type", ""); press("style", ""); apply(); });

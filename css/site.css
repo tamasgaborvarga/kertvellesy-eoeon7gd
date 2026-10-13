@@ -87,10 +87,10 @@ main:focus { outline: none; }
 .big-link:hover, .big-link:focus-visible { background-size: 100% 1px; }
 
 .arrow-link { display: inline-flex; align-items: center; gap: .6em; font-weight: 500; text-decoration: none; padding-block: 10px; border-bottom: 1px solid var(--line-strong); padding-bottom: 6px; }
-.arrow-link::after { content: "→"; transition: transform .35s var(--ease); }
+.arrow-link::after { transition: transform .35s var(--ease); }
 .arrow-link:hover::after, .arrow-link:focus-visible::after { transform: translateX(4px); }
 .arrow-back::after { content: none; }
-.arrow-back::before { content: "←"; transition: transform .35s var(--ease); }
+.arrow-back::before { transition: transform .35s var(--ease); }
 .arrow-back:hover::before { transform: translateX(-4px); }
 .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 500; letter-spacing: .01em; transition: background .3s; }
 .btn:hover { background: var(--ink-2); }
@@ -142,8 +142,6 @@ main:focus { outline: none; }
   .head-row { min-height: 64px; align-items: center; }
   .brand img { width: 112px; }
   .js .nav-toggle { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 2px; background: none; border: 0; cursor: pointer; font-weight: 500; }
-  .nav-toggle-bars { width: 22px; height: 8px; border-block: 1.5px solid currentColor; transition: transform .3s var(--ease); }
-  .nav-toggle[aria-expanded="true"] .nav-toggle-bars { transform: scaleY(.25); }
   .js .site-nav { position: fixed; inset: 64px 0 0 0; background: var(--paper); padding: 8px var(--gutter) 40px; border-top: 1px solid var(--line);
     visibility: hidden; opacity: 0; transform: translateY(-8px); transition: opacity .3s, transform .3s var(--ease), visibility 0s .3s; overflow-y: auto; }
   .js .site-nav.open { visibility: visible; opacity: 1; transform: none; transition: opacity .3s, transform .3s var(--ease); }
@@ -193,26 +191,9 @@ main:focus { outline: none; }
 
 /* ---------- hero ---------- */
 .hero { padding-top: clamp(24px, 4vw, 56px); }
-.hero-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 32px var(--gutter); align-items: end; }
-.hero-text { grid-column: 1 / span 5; padding-bottom: clamp(8px, 2vw, 32px); }
-.hero-text .display { font-size: clamp(2.5rem, 4.7vw, 5.4rem); }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: clamp(28px, 4vw, 52px); }
-.hero-media { grid-column: 6 / -1; margin-right: calc(var(--gutter) * -1); }
-.hero-media img { width: 100%; height: min(calc(100vh - 230px), 720px); min-height: 400px; object-fit: cover; }
-.titleblock { display: grid; grid-template-columns: auto 1fr; border: 1px solid var(--ink); border-top: 0; font-size: .86rem; background: var(--paper); }
-.hero-media .titleblock { margin-right: var(--gutter); width: min(100%, 520px); margin-left: auto; }
-.titleblock .tb-k, .titleblock dt { padding: 9px 14px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); }
-.titleblock .tb-v, .titleblock dd { padding: 9px 14px; border-top: 1px solid var(--ink); }
-.titleblock .tb-k { font: 500 .7rem/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.titleblock div { display: contents; }
-dl.titleblock { border-top: 1px solid var(--ink); }
-dl.titleblock div:first-child dt, dl.titleblock div:first-child dd { border-top: 0; }
-@media (max-width: 900px) {
-  .hero-text, .hero-media { grid-column: 1 / -1; }
-  .hero-media { margin-inline: calc(var(--gutter) * -1); order: -1; }
-  .hero-media img { height: 52vh; min-height: 280px; max-height: 520px; }
-  .hero-media .titleblock { margin: 0 var(--gutter); width: auto; }
-}
+/* projekt-/állás-metaadat (dl.titleblock): a megjelenést lásd lent, „keret nélküli” blokk */
+.titleblock dt { color: var(--muted); }
 
 /* ---------- bevezető ---------- */
 .intro-media { margin-top: var(--s2); }
@@ -419,9 +400,6 @@ dl.titleblock div:first-child dt, dl.titleblock div:first-child dd { border-top:
 .post-item a { display: grid; gap: 8px; text-decoration: none; }
 .post-media { display: block; overflow: hidden; background: var(--paper-2); margin-bottom: 10px; }
 .post-media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform 1.1s var(--ease); }
-.post-media-empty-unused { aspect-ratio: 3 / 2; background:
-  linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 28px 28px,
-  linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 28px 28px, var(--paper-2); }
 .post-item a:hover img { transform: scale(1.025); }
 .post-meta { font-size: .84rem; color: var(--muted); }
 .post-title { font: 400 clamp(1.5rem, 2.2vw, 2.1rem)/1.12 var(--display); text-wrap: balance; }
@@ -498,17 +476,15 @@ dl.titleblock div:first-child dt, dl.titleblock div:first-child dd { border-top:
 .h1 { letter-spacing: -.042em; line-height: 1; }
 .h2, .service-title, .subnav-t { font-weight: 300; letter-spacing: -.038em; line-height: 1.04; }
 .display-sub { color: var(--stone); }
-.hero-text .display { font-size: clamp(2.4rem, 4.4vw, 5.1rem); }
 .card-title, .pager-t, .person-name, .post-title, .partner-list li, .big-text, .big-link, .article h2 { font-weight: 400; letter-spacing: -.025em; }
 .card-title { font-size: 1.22rem; line-height: 1.22; }
 .person-name { font-size: 1.16rem; }
 .partner-list li { font-size: 1.1rem; }
 .quote blockquote p:first-child, .founder-text .prose-lg p:first-child, .article .lead, .article blockquote p { font-weight: 300; letter-spacing: -.032em; }
-.label, .eyebrow, .foot-h, .filter-label, dt, .titleblock .tb-k {
+.label, .eyebrow, .foot-h, .filter-label, dt {
   font-family: var(--mono); font-weight: 400; letter-spacing: .08em; font-size: .7rem; }
-.card-no, .service-no, .pill-n, .crumbs, .post-meta, .filter-status, .lb-count, .card-cat, .motto,
-.titleblock .tb-v, .titleblock dd, .person-role, .quote figcaption { font-family: var(--mono); letter-spacing: 0; }
-.card-cat, .person-role, .titleblock .tb-v, .titleblock dd, .post-meta, .crumbs { font-size: .76rem; }
+.card-no, .service-no, .pill-n, .crumbs, .post-meta, .filter-status, .lb-count, .card-cat, .motto, .titleblock dd, .person-role, .quote figcaption { font-family: var(--mono); letter-spacing: 0; }
+.card-cat, .person-role, .titleblock dd, .post-meta, .crumbs { font-size: .76rem; }
 .quote figcaption { letter-spacing: .08em; }
 .btn, .arrow-link, .pill { letter-spacing: -.005em; }
 .service-title a { text-decoration: none; }
@@ -522,16 +498,14 @@ dl.titleblock div:first-child dt, dl.titleblock div:first-child dd { border-top:
   --t4: 3.157rem; --t5: 4.209rem; --t6: 5.61rem;
 }
 .display { font-size: clamp(var(--t3), 6vw, var(--t6)); }
-.hero-text .display { font-size: clamp(var(--t3), 4.4vw, var(--t5)); }
 .h1 { font-size: clamp(var(--t3), 5vw, var(--t5)); }
 .h2, .service-title, .subnav-t, .quote blockquote p:first-child { font-size: clamp(var(--t2), 3.2vw, var(--t4)); }
 .founder-text .prose-lg p:first-child, .big-text, .big-link, .article .lead, .post-title, .article h2,
 .foot-lead { font-size: clamp(var(--t1), 2.2vw, var(--t2)); }
 @media (max-width: 860px) { .js .site-nav .nav-top { font-size: var(--t2); } }
 .card-title, .person-name, .pager-t, .partner-list li, .r-name, .article blockquote p { font-size: var(--t1); }
-.label, .eyebrow, .foot-h, .filter-label, dt, .titleblock .tb-k, .sub-group-t,
-.card-no, .service-no, .sub-no, .sub-meta, .pill-n, .card-cat, .person-role, .r-role,
-.titleblock .tb-v, .titleblock dd, .post-meta, .crumbs, .lb-count, .filter-status { font-size: var(--t-1); }
+.label, .eyebrow, .foot-h, .filter-label, dt, .sub-group-t,
+.card-no, .service-no, .sub-no, .sub-meta, .pill-n, .card-cat, .person-role, .r-role, .titleblock dd, .post-meta, .crumbs, .lb-count, .filter-status { font-size: var(--t-1); }
 
 /* m1 — partnerlista a menü indexnyelvén */
 .partner-list li { display: grid; grid-template-columns: 2.6em 1fr; align-items: baseline; }
@@ -676,3 +650,43 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
 @media (max-width: 860px) { .project-tb { justify-self: start; } }
 /* a projekt fő képe pontosan a saját arányában — nincs „letterbox”-sáv a betöltési háttérszínből */
 .project-lead img { width: auto; height: auto; max-width: 100%; max-height: 86vh; object-fit: initial; }
+
+/* ---------- csiszolás (2026-10-13) ---------- */
+/* hosszú, töretlen szövegrészek (URL-ek) ne tágítsák ki mobilon az oldalt */
+.article, .prose, .split-body, .service-body, .r-mail, .person a { overflow-wrap: anywhere; }
+@media (max-width: 480px) { .article p, .prose p { hyphens: auto; } }
+
+/* címek: Switzerrel a -0,048 em zsúfolt — lazább, de még feszes betűköz */
+.display, .hero-panel .display { letter-spacing: -.04em; }
+.h1 { letter-spacing: -.036em; }
+.h2, .service-title, .subnav-t { letter-spacing: -.032em; }
+
+/* érintési célok mobilon: min. 40–44 px magas kattintható sáv, a vizuális méret marad */
+@media (max-width: 860px) {
+  .site-foot li a, .crumbs a, .contact-grid .big-link, .service-title a, .inline-list a, .facts a {
+    display: inline-flex; align-items: center; min-height: 44px; }
+  .site-foot li { padding-block: 0; }
+  .contact-grid li + li { margin-top: -6px; }
+}
+
+/* 320 px: az iroda-felirat egy sorban maradjon */
+@media (max-width: 400px) {
+  .eyebrow { letter-spacing: .04em; }
+  .eyebrow::before { display: none; }
+}
+
+/* ---------- referencia-szűrő mobilon: natív legördülők a pillák helyett ---------- */
+.filter-select { display: none; }
+@media (max-width: 640px) {
+  .filters { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+  .filter-row { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .filter-row .pills { display: none; }
+  .filter-select { display: block; position: relative; }
+  .filter-select::after { content: ""; position: absolute; right: 14px; top: 50%; width: 7px; height: 7px; margin-top: -6px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); pointer-events: none; }
+  .filter-select select { -webkit-appearance: none; appearance: none; width: 100%; height: 48px; padding: 0 36px 0 14px;
+    font: 400 1rem var(--sans); letter-spacing: -.01em; color: var(--ink); background: var(--paper);
+    border: 1px solid var(--line-strong); border-radius: 0; cursor: pointer; text-overflow: ellipsis; }
+  .filter-select select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .filter-status { grid-column: 1 / -1; }
+}
