@@ -666,3 +666,13 @@ body { font-family: var(--text); font-size: 1.0625rem; line-height: 1.6; font-we
 .arrow-back:hover::before { transform: scaleX(-1) translateX(4px); }
 .hc-arrow { font-size: 0; display: inline-flex; align-items: center; }
 .hero-cap .hc-arrow { align-self: center; }
+
+/* projekt-/állás-metaadat: keret nélküli, sima szöveg (címke Mono, érték groteszk) */
+dl.titleblock { display: flex; flex-wrap: wrap; gap: 14px 40px; border: 0; background: none; font-size: inherit; }
+dl.titleblock div { display: block; }
+dl.titleblock dt, dl.titleblock div:first-child dt { padding: 0; border: 0; margin-bottom: 4px; }
+dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font-family: var(--sans); font-size: 1rem; letter-spacing: -.01em; }
+.project-tb { justify-self: end; padding-bottom: .45em; }
+@media (max-width: 860px) { .project-tb { justify-self: start; } }
+/* a projekt fő képe pontosan a saját arányában — nincs „letterbox”-sáv a betöltési háttérszínből */
+.project-lead img { width: auto; height: auto; max-width: 100%; max-height: 86vh; object-fit: initial; }
