@@ -539,43 +539,37 @@ main:focus { outline: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
 }
 
-/* ---------- heró: teljes szélességű, filmszerű (2026-10-13) ----------
-   A kép kitölti a képernyőt; a címpanel papírlapként rálóg a kép alsó szélére
-   (átfedés, nem gradiens). A projektadat-blokk a kép jobb alsó sarkában. */
+/* ---------- heró: teljes szélességű kép, semmi nem lóg bele ----------
+   Kép → alatta vékony sáv (iroda neve balra, projektfelirat jobbra, egy vonalban) → cím.
+   A kép magassága úgy van méretezve, hogy a sáv még az első képernyőn látszódjon. */
 .hero.hero-full { padding-top: 0; }
-.hero-stage { position: relative; margin: 0; overflow: hidden; background: var(--ink); }
-.hero-img { display: block; }
-.hero-img img { width: 100%; height: calc(100svh - 76px); min-height: 520px; max-height: 1080px;
-  object-fit: cover; object-position: 50% 42%; }
-/* képfelirat: a bal oldali fül párja — azonos magasság, papír, a kép aljához simul */
-.hero-cap { position: absolute; right: var(--gutter); bottom: 0; z-index: 3; background: var(--paper); }
-.hero-cap a { display: grid; grid-template-columns: auto auto; align-items: baseline; column-gap: 28px; row-gap: 6px;
-  height: 84px; padding: 28px 28px 0; text-decoration: none; }
-.hc-k { grid-column: 1 / -1; font: 400 var(--t-1)/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.hc-t { font-size: 1rem; font-weight: 450; letter-spacing: -.015em; white-space: nowrap; }
-.hc-arrow { justify-self: end; transition: transform .35s var(--ease); }
-.hero-cap a:hover .hc-t { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
-.hero-cap a:hover .hc-arrow { transform: translateX(4px); }
-.hero-panel-wrap { position: relative; z-index: 2; margin-top: -84px; }  /* csak a „fül” (eyebrow) lóg a képre; a cím a hajtás alatt kezdődik, sosem félbevágva */
-.hero-panel { position: relative; background: var(--paper); width: min(52%, 700px);
-  padding: 34px clamp(28px, 3.2vw, 56px) 0 0; }
-.hero-panel .eyebrow { margin-bottom: 34px; }
-.hero-panel::before { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: 50vw; background: var(--paper); }
-.hero-panel .display { font-size: clamp(var(--t3), 4vw, var(--t5)); }
+.hero-stage { margin: 0; }
+.hero-img { display: block; overflow: hidden; background: var(--paper-2); }
+.hero-img img { width: 100%; height: calc(100svh - 76px - 72px); min-height: 460px; max-height: 1000px;
+  object-fit: cover; object-position: 50% 45%; }
+.hero-band { display: flex; align-items: center; justify-content: space-between; gap: 16px 40px;
+  min-height: 72px; border-bottom: 1px solid var(--line); }
+.hero-band .eyebrow { margin: 0; }
+.hero-cap { display: flex; align-items: baseline; gap: 20px; text-decoration: none; min-height: 44px; align-items: center; }
+.hc-k { font: 400 var(--t-1)/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.hc-t { font-size: 1rem; font-weight: 450; letter-spacing: -.015em; }
+.hc-arrow { display: inline-flex; align-items: center; font-size: 0; transition: transform .35s var(--ease); }
+.hero-cap:hover .hc-t { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.hero-cap:hover .hc-arrow { transform: translateX(4px); }
+.hero-panel { padding-top: clamp(40px, 6vw, 88px); }
+.hero-panel .display { font-size: clamp(var(--t3), 4.6vw, var(--t5)); max-width: 22ch; }
 @media (prefers-reduced-motion: no-preference) {
   .hero-img img { animation: hero-settle 2.4s cubic-bezier(.2, .7, .1, 1) both; }
-  @keyframes hero-settle { from { transform: scale(1.06); } to { transform: none; } }
+  @keyframes hero-settle { from { transform: scale(1.05); } to { transform: none; } }
 }
 @media (max-width: 900px) {
-  .hero-img img { height: 62svh; min-height: 320px; max-height: 620px; }
-  .hero-cap { position: static; background: none; }
-  .hero-cap a { height: auto; padding: 14px var(--gutter); border-bottom: 1px solid var(--line); grid-template-columns: 1fr auto; }
-  .hc-t { white-space: normal; }
-  .hero-stage { overflow: visible; background: none; }
-  .hero-panel-wrap { margin-top: 0; }
-  .hero-panel { width: auto; padding: 28px 0 0; }
-  .hero-panel::before { display: none; }
+  .hero-img img { height: 62svh; min-height: 320px; max-height: 620px; object-position: 30% 50%; }
+  .hero-band { flex-direction: column; align-items: stretch; gap: 0; padding-block: 6px 14px; }
+  .hero-cap { order: -1; display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+  .hc-k { grid-column: 1 / -1; }
+  .hero-panel { padding-top: 20px; }
 }
+@media (max-width: 400px) { .hero-band .eyebrow::before { display: none; } }
 
 /* ---------- mobil menüikon: két vonal → X; felirat csak képernyőolvasónak ---------- */
 .head-tools { display: flex; align-items: center; gap: 6px; margin-left: clamp(8px, 1.4vw, 22px); }
@@ -610,7 +604,6 @@ main:focus { outline: none; }
 [data-theme="dark"] .foot-brand img { mix-blend-mode: normal; }
 html { transition: background-color .3s; }
 body { transition: background-color .3s, color .3s; }
-@media (max-width: 900px) { .hero-img img { object-position: 30% 50%; } }
 @media (min-width: 861px) { .site-nav { margin-left: auto; } }
 
 /* ---------- betűrendszer: Switzer (címek, felület, folyó szöveg) + Geist Mono (metaadat) ---------- */
@@ -639,7 +632,6 @@ body { font-family: var(--text); font-size: 1.0625rem; line-height: 1.6; font-we
 .arrow-back::before { transform: scaleX(-1); }
 .arrow-back:hover::before { transform: scaleX(-1) translateX(4px); }
 .hc-arrow { font-size: 0; display: inline-flex; align-items: center; }
-.hero-cap .hc-arrow { align-self: center; }
 
 /* projekt-/állás-metaadat: keret nélküli, sima szöveg (címke Mono, érték groteszk) */
 dl.titleblock { display: flex; flex-wrap: wrap; gap: 14px 40px; border: 0; background: none; font-size: inherit; }
