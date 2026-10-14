@@ -41,9 +41,22 @@
     }
     try { localStorage.setItem("kvb-theme", dark ? "dark" : "light"); } catch (err) { /* privát mód */ }
   });
+  // a választott téma minden visszatéréskor érvényes: a mobilböngészők a „vissza” lépésnél (és lapváltáskor)
+  // a gyorsítótárból adják vissza a korábbi oldalt a régi témával — ilyenkor újraolvassuk, áttűnés nélkül
+  var syncTheme = function () {
+    var want = null;
+    try { want = localStorage.getItem("kvb-theme"); } catch (err) { return; }
+    var dark = want === "dark";
+    if (dark === (root.dataset.theme === "dark")) return;
+    root.classList.add("b-no-anim");
+    applyTheme(dark);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove("b-no-anim"); }); });
+  };
+  window.addEventListener("pageshow", syncTheme);
+  window.addEventListener("storage", function (ev) { if (ev.key === "kvb-theme") syncTheme(); });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) syncTheme(); });
 
-  /* --- sáv: sötét fejezet fölött világos (a tetején átlátszó), papír fölött tinta;
-         lefelé görgetve elbújik, felfelé visszajön --- */
+  /* --- sáv: mindig látható; sötét fejezet fölött világos (a tetején átlátszó), papír fölött tinta --- */
   var bar = document.getElementById("b-bar");
   var menuEl = document.getElementById("b-menu");
   var menuBtn = document.querySelector(".b-menu-btn");
@@ -60,10 +73,7 @@
       var dark = !!(under && under.closest(".b-night, .b-foot"));
       bar.classList.toggle("on-dark", dark);
       bar.classList.toggle("at-top", y < 8);
-      var open = root.classList.contains("menu-open");
-      bar.classList.toggle("is-hidden", !open && y > 320 && y > lastY + 2);
-      if (y < lastY - 2 || y < 320) bar.classList.remove("is-hidden");
-      lastY = y;
+      lastY = y;   // a sáv mindig látható (nem bújik el görgetéskor — a user kérése)
     };
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
     window.addEventListener("resize", paint);
