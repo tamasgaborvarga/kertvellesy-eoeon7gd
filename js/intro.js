@@ -1,4 +1,4 @@
-/* Kertvéllesy intró — az eredeti logó kézírásként rajzolódik ki (≈2,6 s), majd 1 s alatt áttűnik az oldalba.
+/* Kertvéllesy intró (B változat: az A intro.js másolata — saját kulcs: kvb-intro, a B borítóképeit várja) — az eredeti logó kézírásként rajzolódik ki (≈2,6 s), majd 1 s alatt áttűnik az oldalba.
    Adat: window.KV_INTRO (a jóváhagyott nyomvonal + időzítés, intro/work/export_web.py).
    Csak a kezdőlapon, munkamenetenként egyszer; kattintásra/koppintásra/billentyűre átugorható;
    minden eszközön és beállítás mellett teljes egészében lefut. A végső képkocka = az eredeti logó. */
@@ -8,7 +8,7 @@
   var el = document.getElementById("intro");
   var D = window.KV_INTRO;
   if (!el || !D || !root.classList.contains("intro")) { if (el) el.remove(); root.classList.remove("intro"); return; }
-  try { sessionStorage.setItem("kv-intro", "1"); } catch (err) { /* privát mód: minden alkalommal lefut, de átugorható */ }
+  try { sessionStorage.setItem("kvb-intro", "1"); } catch (err) { /* privát mód: minden alkalommal lefut, de átugorható */ }
 
   var NS = "http://www.w3.org/2000/svg";
   var svg = el.querySelector("svg");
@@ -79,7 +79,7 @@
     tag.setAttribute("transform", "translate(0 " + (6 * scale * (1 - q)).toFixed(2) + ")");
   }
 
-  var heroImgs = Array.prototype.slice.call(document.querySelectorAll(".hero-img img"));
+  var heroImgs = Array.prototype.slice.call(document.querySelectorAll(".b-cover-media img"));
   function ready() {  // a kezdőképek dekódolása (max. 500 ms várakozás), hogy az áttűnés ne akadjon meg
     var decs = heroImgs.map(function (i) { return i.decode ? i.decode().catch(function () {}) : Promise.resolve(); });
     return Promise.race([Promise.all(decs), new Promise(function (r) { setTimeout(r, 500); })]);
