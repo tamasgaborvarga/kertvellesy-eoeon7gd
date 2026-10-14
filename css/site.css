@@ -847,8 +847,9 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
   transition: background-color 1s cubic-bezier(.65, 0, .35, 1), color 1s cubic-bezier(.65, 0, .35, 1),
               border-color 1s cubic-bezier(.65, 0, .35, 1), opacity 1s cubic-bezier(.65, 0, .35, 1) !important; }
 .hero-cap-static { margin: 0; cursor: default; }
-/* Soft Flow borító (széles, 2:1): a kivágás balra tolva, hogy az épület teljes tömege beférjen a kártyába */
-.card[data-slug="pecs-soft-flow-kutato-fejleszto-kozpont"] .card-media img { object-position: 27% 45%; }
+/* Soft Flow borító (épületfotó, alsó harmada út): a kivágás az épületre és az égre tolva */
+.card[data-slug="pecs-soft-flow-kutato-fejleszto-kozpont"] .card-media img { object-position: 50% 40%; }
+.project[data-slug="pecs-soft-flow-kutato-fejleszto-kozpont"] .project-stage img { object-position: 50% 38%; }
 
 /* heró mobilon: a kép alatt csak a képfelirat (egy tömb, egy lezáró vonal);
    az iroda neve mobilon kimarad (a fejlécben ott a logó). Asztalin marad az egysoros sáv. */
@@ -865,3 +866,13 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
   .theme-vt::view-transition-new(root) { animation-duration: 1s !important; }
   .theme-vt::view-transition-group(root) { animation-duration: 1s !important; }
 }
+/* projektoldal nyitóképe mobilon: a kezdőképhez hasonlóan 4:3 fekvő — kevésbé nagyít bele, a teljes épület látszik */
+@media (max-width: 860px) { .project-stage img { height: auto; aspect-ratio: 4 / 3; min-height: 0; } }
+
+/* ---------- témakapcsoló ikon: a félhold az oldal-áttűnéssel azonos ütemben fordul át (1s), félúton „lélegzik” ---------- */
+.tt-icon, [data-theme="dark"] .tt-icon, .theme-toggle:hover .tt-icon, [data-theme="dark"] .theme-toggle:hover .tt-icon { transform: none; }
+.tt-icon { rotate: 0deg; scale: 1; transition: rotate 1s cubic-bezier(.65, 0, .35, 1); }
+[data-theme="dark"] .tt-icon { rotate: 180deg; }
+.theme-toggle.is-switching .tt-icon { animation: tt-breathe 1s cubic-bezier(.65, 0, .35, 1); }
+@keyframes tt-breathe { 0% { scale: 1; } 50% { scale: .72; } 100% { scale: 1; } }
+.theme-toggle:focus-visible .tt-icon { outline: none; }

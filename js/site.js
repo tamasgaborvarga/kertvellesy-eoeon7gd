@@ -27,6 +27,9 @@
   if (themeBtn) themeBtn.addEventListener("click", function () {
     var dark = document.documentElement.dataset.theme !== "dark";
     var root = document.documentElement;
+    themeBtn.classList.remove("is-switching"); void themeBtn.offsetWidth;  // újraindítható animáció
+    themeBtn.classList.add("is-switching");
+    setTimeout(function () { themeBtn.classList.remove("is-switching"); }, 1050);
     // az egész oldal egyetlen lágy áttűnéssel vált (View Transitions); ahol nincs ilyen, színátmenet.
     // Csak halványítás, elmozdulás nincs — ezért csökkentett mozgás beállítás mellett is lefut.
     if (document.startViewTransition) {
