@@ -777,3 +777,7 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
   .site-nav .nav-top[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--lime);
     text-decoration-thickness: 1.5px; text-underline-offset: .16em; }
 }
+
+/* a lapozó után mindig ugyanannyi levegő — akkor is, ha nincs „Kapcsolódó projektek” szakasz */
+.project { padding-bottom: var(--s1); }
+.related { padding-top: 0; }
