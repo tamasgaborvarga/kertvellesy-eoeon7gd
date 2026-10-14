@@ -569,7 +569,6 @@ main:focus { outline: none; }
   .hc-k { grid-column: 1 / -1; }
   .hero-panel { padding-top: 20px; }
 }
-@media (max-width: 400px) { .hero-band .eyebrow::before { display: none; } }
 
 /* ---------- mobil menüikon: két vonal → X; felirat csak képernyőolvasónak ---------- */
 .head-tools { display: flex; align-items: center; gap: 6px; margin-left: clamp(8px, 1.4vw, 22px); }
@@ -662,10 +661,6 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
 }
 
 /* 320 px: az iroda-felirat egy sorban maradjon */
-@media (max-width: 400px) {
-  .eyebrow { letter-spacing: .04em; }
-  .eyebrow::before { display: none; }
-}
 
 /* ---------- referencia-szűrő mobilon: natív legördülők a pillák helyett ---------- */
 .filter-select { display: none; }
@@ -772,3 +767,13 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
 .eyebrow::before { background: var(--lime); height: 1.5px; }
 ::selection { background: rgba(167, 181, 55, .38); color: var(--ink); }
 [data-theme="dark"] ::selection { background: rgba(167, 181, 55, .45); color: #FFFFFF; }
+
+/* mobil: a zöld ott is jelen van — rövidebb felirat-vonal (320 px-en is egy sorban), aktív menüpont aláhúzva */
+@media (max-width: 400px) {
+  .eyebrow { letter-spacing: .04em; gap: 8px; }
+  .eyebrow::before { width: 14px; flex: none; }
+}
+@media (max-width: 860px) {
+  .site-nav .nav-top[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--lime);
+    text-decoration-thickness: 1.5px; text-underline-offset: .16em; }
+}
