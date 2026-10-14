@@ -849,3 +849,19 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
 .hero-cap-static { margin: 0; cursor: default; }
 /* Soft Flow borító (széles, 2:1): a kivágás balra tolva, hogy az épület teljes tömege beférjen a kártyába */
 .card[data-slug="pecs-soft-flow-kutato-fejleszto-kozpont"] .card-media img { object-position: 27% 45%; }
+
+/* heró mobilon: a kép alatt csak a képfelirat (egy tömb, egy lezáró vonal);
+   az iroda neve mobilon kimarad (a fejlécben ott a logó). Asztalin marad az egysoros sáv. */
+@media (max-width: 900px) {
+  .hero-eyebrow-d { display: none; }
+  .hero-band { padding-block: 0; min-height: 0; border-bottom: 1px solid var(--line); }
+  .hero-cap { margin: 0; padding: 14px 0 16px; border-bottom: 0; gap: 6px 16px; }
+  .hero-panel { padding-top: 28px; }
+}
+
+/* csökkentett mozgásnál is: a témaváltás lágy halványítás marad (elmozdulás nincs benne) */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after { transition-duration: 1s !important; }
+  .theme-vt::view-transition-new(root) { animation-duration: 1s !important; }
+  .theme-vt::view-transition-group(root) { animation-duration: 1s !important; }
+}

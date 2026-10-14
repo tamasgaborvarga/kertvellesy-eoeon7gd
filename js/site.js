@@ -27,17 +27,16 @@
   if (themeBtn) themeBtn.addEventListener("click", function () {
     var dark = document.documentElement.dataset.theme !== "dark";
     var root = document.documentElement;
-    // az egész oldal egyetlen lágy áttűnéssel vált (View Transitions); ahol nincs ilyen, színátmenet
-    if (!reduce && document.startViewTransition) {
+    // az egész oldal egyetlen lágy áttűnéssel vált (View Transitions); ahol nincs ilyen, színátmenet.
+    // Csak halványítás, elmozdulás nincs — ezért csökkentett mozgás beállítás mellett is lefut.
+    if (document.startViewTransition) {
       root.classList.add("theme-vt");
       var t = document.startViewTransition(function () { applyTheme(dark); });
       t.finished.then(function () { root.classList.remove("theme-vt"); }, function () { root.classList.remove("theme-vt"); });
-    } else if (!reduce) {
+    } else {
       root.classList.add("theme-anim");
       applyTheme(dark);
       setTimeout(function () { root.classList.remove("theme-anim"); }, 1050);
-    } else {
-      applyTheme(dark);
     }
     try { localStorage.setItem("kv-theme", dark ? "dark" : "light"); } catch (err) { /* privát mód */ }
   });
