@@ -847,3 +847,5 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
   transition: background-color 1s cubic-bezier(.65, 0, .35, 1), color 1s cubic-bezier(.65, 0, .35, 1),
               border-color 1s cubic-bezier(.65, 0, .35, 1), opacity 1s cubic-bezier(.65, 0, .35, 1) !important; }
 .hero-cap-static { margin: 0; cursor: default; }
+/* Soft Flow borító (széles, 2:1): a kivágás balra tolva, hogy az épület teljes tömege beférjen a kártyába */
+.card[data-slug="pecs-soft-flow-kutato-fejleszto-kozpont"] .card-media img { object-position: 27% 45%; }
