@@ -86,7 +86,7 @@
     // épp ekkor kezdi a lassú ráközelítését — így az oldal „megérkezik”, nem csak előtűnik
     root.classList.add("intro-leaving");
     el.classList.add("out");
-    setTimeout(function () { el.remove(); root.classList.remove("intro", "intro-leaving"); }, 1600);
+    setTimeout(function () { el.remove(); root.classList.remove("intro", "intro-leaving"); }, 2550);
   }
 
   function frame(now) {
