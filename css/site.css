@@ -735,3 +735,17 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
 @media (prefers-reduced-motion: no-preference) {
   .project-stage img, .project-lead img { view-transition-name: proj-lead; }
 }
+
+/* kártya: a sorszám a cím első sorának alapvonalán ül (nem a doboz tetején) */
+.card-meta { align-items: baseline; }
+.card-no { grid-row: auto; line-height: inherit; }
+.card-cat { grid-column: 2; }
+
+/* oldalváltás: a régi oldal előbb elhalványul, az új csak utána jelenik meg —
+   így két szövegréteg sosem fedi egymást (a kép átnövése közben sem) */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: kv-out .16s ease-in both; }
+  ::view-transition-new(root) { animation: kv-in .3s ease-out .14s both; }
+  @keyframes kv-out { to { opacity: 0; } }
+  @keyframes kv-in { from { opacity: 0; } }
+}
