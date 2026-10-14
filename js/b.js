@@ -25,8 +25,33 @@
     if (metaTheme) metaTheme.setAttribute("content", dark ? "#121311" : "#EEEBE5");
   };
   applyTheme(root.dataset.theme === "dark");
+
+  /* --- kezdőkép: csak a témához illő kép betöltése után jelenik meg; váltás előtt az új kép kész --- */
+  var heroBox = document.querySelector(".b-hero-media");
+  var heroImg = function (dark) { return heroBox && heroBox.querySelector(dark ? ".b-hero-night" : ".b-hero-day"); };
+  var whenReady = function (img) {
+    if (!img) return Promise.resolve();
+    var dec = function () { return img.decode ? img.decode().catch(function () {}) : Promise.resolve(); };
+    var loaded = img.complete && img.naturalWidth ? Promise.resolve() :
+      new Promise(function (r) { img.addEventListener("load", r, { once: true }); img.addEventListener("error", r, { once: true }); });
+    return loaded.then(dec);
+  };
+  if (heroBox) {
+    var cur = heroImg(root.dataset.theme === "dark");
+    var other = heroImg(root.dataset.theme !== "dark");
+    whenReady(cur).then(function () { heroBox.classList.add("is-ready"); });
+    // a másik kép csak az első után töltődik (ne versenyezzen a sávszélességért)
+    if (other && other.getAttribute("fetchpriority")) other.setAttribute("fetchpriority", "low");
+  }
+
   if (themeBtn) themeBtn.addEventListener("click", function () {
     var dark = root.dataset.theme !== "dark";
+    var target = heroImg(dark);
+    // ha az új téma képe még nincs kész, megvárjuk (legfeljebb 600 ms), hogy az áttűnés ne üres képre fusson
+    var gate = target ? Promise.race([whenReady(target), new Promise(function (r) { setTimeout(r, 600); })]) : Promise.resolve();
+    gate.then(function () { switchTheme(dark); });
+  });
+  var switchTheme = function (dark) {
     themeBtn.classList.remove("is-switching"); void themeBtn.offsetWidth;
     themeBtn.classList.add("is-switching");
     setTimeout(function () { themeBtn.classList.remove("is-switching"); }, 1050);
@@ -40,7 +65,7 @@
       setTimeout(function () { root.classList.remove("theme-anim"); }, 1050);
     }
     try { localStorage.setItem("kvb-theme", dark ? "dark" : "light"); } catch (err) { /* privát mód */ }
-  });
+  };
   // a választott téma minden visszatéréskor érvényes: a mobilböngészők a „vissza” lépésnél (és lapváltáskor)
   // a gyorsítótárból adják vissza a korábbi oldalt a régi témával — ilyenkor újraolvassuk, áttűnés nélkül
   var syncTheme = function () {
@@ -148,36 +173,47 @@
     upd();
   }
 
-  /* --- jelmondat: „begépelés” a borítón — az intró után indul; csökkentett mozgásnál azonnal kész --- */
+  /* --- jelmondat: valódi gépelés asztalon — betűről betűre, emberi tempóban (szóközöknél, írásjeleknél
+         rövid megállás, néha gyorsabb sorozat), előtte villogó kurzor. A gépelés nem mozgat semmit a térben
+         (mint az intró), ezért csökkentett mozgás beállítás mellett is lefut. Álló kijelzőn nincs gépelés. --- */
   var typed = document.querySelector(".b-typed-v");
-  // csak fekvő (asztali) kijelzőn gépel; álló kijelzőn a nagy címbetűs változat áll (CSS)
-  if (typed && !reduce && !window.matchMedia("(max-aspect-ratio: 5/4)").matches) {
-    var lines = Array.prototype.slice.call(typed.children).map(function (s) { return s.textContent; });
+  if (typed && !window.matchMedia("(max-aspect-ratio: 5/4)").matches) {
     var spans = Array.prototype.slice.call(typed.children);
+    var lines = spans.map(function (s) { return s.textContent; });
     var caret = document.createElement("span"); caret.className = "b-caret";
-    var run = function () {
-      spans.forEach(function (s) { s.textContent = ""; });
-      typed.classList.add("typing");
+    spans.forEach(function (s) { s.textContent = ""; });
+    typed.classList.add("typing");
+    spans[0].appendChild(caret);
+    var delayFor = function (ch, next) {
+      var base = 45 + Math.random() * 70;                    // 45–115 ms / betű
+      if (Math.random() < .12) base = 28 + Math.random() * 20; // néha gyors sorozat
+      if (ch === " ") base += 40 + Math.random() * 90;        // szóhatár
+      if (ch === ",") base += 220;
+      if (ch === "…" || ch === ".") base += 520;
+      if (next === undefined) base += 650;                    // sor vége: elgondolkodik
+      return base;
+    };
+    var type = function () {
       var li = 0, ci = 0;
       var tick = function () {
-        if (li >= lines.length) { setTimeout(function () { caret.remove(); }, 2600); return; }
-        var ch = lines[li].charAt(ci++);
-        spans[li].textContent = lines[li].slice(0, ci);
+        if (li >= lines.length) { setTimeout(function () { caret.remove(); }, 3200); return; }
+        var line = lines[li], ch = line.charAt(ci);
+        ci++;
+        spans[li].textContent = line.slice(0, ci);
         spans[li].appendChild(caret);
-        var wait = 34 + Math.random() * 38;
-        if (ch === "…" || ch === ".") wait = 420;
-        else if (ch === "," || ch === " ") wait += 30;
-        if (ci >= lines[li].length) { li++; ci = 0; wait = Math.max(wait, 520); }
+        var wait = delayFor(ch, line.charAt(ci) || undefined);
+        if (ci >= line.length) { li++; ci = 0; }
         setTimeout(tick, wait);
       };
       tick();
     };
+    var begin = function () { setTimeout(type, 900); };   // a kurzor előbb pár ütemet villog
     if (root.classList.contains("intro")) {
       var mo = new MutationObserver(function () {
-        if (root.classList.contains("intro-leaving") || !root.classList.contains("intro")) { mo.disconnect(); setTimeout(run, 1400); }
+        if (!root.classList.contains("intro")) { mo.disconnect(); begin(); }
       });
       mo.observe(root, { attributes: true, attributeFilter: ["class"] });
-    } else setTimeout(run, 700);
+    } else setTimeout(begin, 500);
   }
 
   /* --- számsáv: a darabszámok egyszer felpörögnek, amikor a sáv a képre ér (az évszám nem) --- */
