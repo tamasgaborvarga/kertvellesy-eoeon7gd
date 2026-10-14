@@ -244,7 +244,7 @@ html.vb.js .b-hero-media.is-ready img.lz { transition: opacity .7s var(--b-ease)
 html.vb[data-theme="dark"] .b-hero-media img.b-hero-night { opacity: 1; }   /* világos téma: nappali kép, sötét: éjszakai */
 .vb .b-cover-shade { position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(120% 70% at 0 0, rgba(11, 12, 10, .55), rgba(11, 12, 10, 0) 55%), linear-gradient(90deg, rgba(11, 12, 10, .45) 0, rgba(11, 12, 10, 0) 55%), linear-gradient(180deg, rgba(11, 12, 10, .62) 0, rgba(11, 12, 10, 0) 20%, rgba(11, 12, 10, 0) 38%, rgba(11, 12, 10, .5) 66%, rgba(11, 12, 10, .86) 100%); }
-.vb .b-cover-type { position: relative; grid-row: 1; align-self: start; padding-top: 104px; }
+.vb .b-cover-type { position: relative; grid-row: 1; align-self: start; padding-top: calc(104px + 1.5 * clamp(1.125rem, 1.4vw, 1.5rem)); }   /* egy sorral lejjebb (asztal) */
 /* a jelmondat: kis betűvel, a Menü gomb alatt, „begépelve” */
 .vb .b-typed { margin: 0; max-width: min(100%, 52ch); font-family: var(--b-text); font-weight: 500; font-size: clamp(1.125rem, 1.4vw, 1.5rem); line-height: 1.5; letter-spacing: .005em; color: #F4F2EC;
   text-shadow: 0 1px 14px rgba(11, 12, 10, .55); min-height: calc(1.55em * 3); }
