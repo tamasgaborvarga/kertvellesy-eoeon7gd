@@ -346,7 +346,8 @@ html.vb[data-theme="dark"] .b-hero-media img.b-hero-night { opacity: 1; }   /* v
 .vb .b-intro-grid > * { grid-column: 1 / -1; min-width: 0; }
 .vb .b-intro-k { margin: 0; }
 .vb .b-intro-h { margin-top: -10px; }
-.vb .b-intro-detail { grid-column: 7 / -1; }
+.vb .b-intro-detail { grid-column: 1 / -1; margin: 0; }
+.vb .b-team-pic img { object-position: 50% 40%; }
 .vb .b-intro-body p + p { margin-top: 1em; }
 .vb .b-intro-body p:last-child { margin-top: 1.6em; }
 @media (min-width: 1000px) {
@@ -354,7 +355,7 @@ html.vb[data-theme="dark"] .b-hero-media img.b-hero-night { opacity: 1; }   /* v
   .vb .b-intro-h { grid-column: 7 / -1; grid-row: 1; margin: 0; }
   .vb .b-intro-fig { grid-column: 1 / span 5; grid-row: 2 / span 2; }
   .vb .b-intro-body { grid-column: 7 / -1; grid-row: 2; align-self: start; }
-  .vb .b-intro-detail { grid-column: 7 / span 3; grid-row: 3; align-self: end; }
+  .vb .b-intro-detail { grid-column: 7 / -1; grid-row: 3; align-self: end; }
 }
 
 /* ---------- kártyák (közös) ---------- */
