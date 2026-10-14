@@ -82,8 +82,11 @@
   function finish() {
     if (done) return; done = true;
     render(T.dur);
+    // lágy kilépés: a logó elhalványul és felúszik, utána oldódik fel a sötét réteg; közben a kezdőkép
+    // épp ekkor kezdi a lassú ráközelítését — így az oldal „megérkezik”, nem csak előtűnik
+    root.classList.add("intro-leaving");
     el.classList.add("out");
-    setTimeout(function () { el.remove(); root.classList.remove("intro"); }, 1000);
+    setTimeout(function () { el.remove(); root.classList.remove("intro", "intro-leaving"); }, 1600);
   }
 
   function frame(now) {
