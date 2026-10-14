@@ -79,12 +79,21 @@
     tag.setAttribute("transform", "translate(0 " + (6 * scale * (1 - q)).toFixed(2) + ")");
   }
 
+  var heroImgs = Array.prototype.slice.call(document.querySelectorAll(".hero-img img"));
+  function ready() {  // a kezdőképek dekódolása (max. 500 ms várakozás), hogy az áttűnés ne akadjon meg
+    var decs = heroImgs.map(function (i) { return i.decode ? i.decode().catch(function () {}) : Promise.resolve(); });
+    return Promise.race([Promise.all(decs), new Promise(function (r) { setTimeout(r, 500); })]);
+  }
+
   function finish() {
     if (done) return; done = true;
     render(T.dur);
+    ready().then(leave);
+  }
+  function leave() {
     // lágy kilépés: a logó elhalványul és felúszik, utána oldódik fel a sötét réteg; közben a kezdőkép
     // épp ekkor kezdi a lassú ráközelítését — így az oldal „megérkezik”, nem csak előtűnik
-    root.classList.add("intro-leaving");
+    root.classList.add("intro-leaving", "hero-arrive");   // a hero-arrive megmarad: a ráközelítés zavartalanul végigfut
     el.classList.add("out");
     setTimeout(function () { el.remove(); root.classList.remove("intro", "intro-leaving"); }, 2550);
   }

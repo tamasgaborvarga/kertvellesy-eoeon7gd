@@ -913,3 +913,21 @@ html.intro:not(.intro-leaving) .hero-img img { animation-play-state: paused; }
 html.intro #intro { transition: opacity 2s cubic-bezier(.45, 0, .25, 1) .45s; will-change: opacity; }
 #intro svg { transition: opacity 1s cubic-bezier(.45, 0, .25, 1), transform 1.4s cubic-bezier(.16, 1, .3, 1); will-change: opacity, transform; }
 html.intro #intro.out svg { transform: translateY(-14px); }
+
+/* intró → nyitóoldal: minden eszközön és beállítás mellett ugyanaz az átmenet (a telefonos élmény).
+   A globális csökkentett-mozgás szabály (*{transition-duration:.01ms}) ezt nem rövidítheti le. */
+@media (prefers-reduced-motion: reduce) {
+  html.intro #intro { transition: opacity 2s cubic-bezier(.45, 0, .25, 1) .45s !important; }
+  html.intro #intro svg { transition: opacity 1s cubic-bezier(.45, 0, .25, 1), transform 1.4s cubic-bezier(.16, 1, .3, 1) !important; }
+
+  html.intro:not(.intro-leaving) .hero-img img { animation-play-state: paused !important; }
+  @keyframes hero-settle { from { transform: scale(1.05); } to { transform: none; } }
+}
+/* nagy kijelzőn is akadásmentes: a kezdőkép és a réteg saját kompozit-rétegen animálódik */
+html.intro .hero-img img { will-change: transform; }
+/* az intró utáni ráközelítés a réteg feloldódásához igazítva: 3,2 s, ugyanakkor indul és lágyan áll be —
+   így a mozgás látható, nem az intró mögött fut le (minden eszközön, minden beállításnál) */
+html.intro .hero-img img, html.hero-arrive .hero-img img {
+  animation: hero-settle 3.2s cubic-bezier(.33, 0, .15, 1) .4s both !important; }
+html.intro:not(.intro-leaving) .hero-img img { animation-play-state: paused !important; }
+@keyframes hero-settle { from { transform: scale(1.05); } to { transform: none; } }
