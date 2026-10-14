@@ -35,7 +35,7 @@
     } else if (!reduce) {
       root.classList.add("theme-anim");
       applyTheme(dark);
-      setTimeout(function () { root.classList.remove("theme-anim"); }, 750);
+      setTimeout(function () { root.classList.remove("theme-anim"); }, 1050);
     } else {
       applyTheme(dark);
     }
