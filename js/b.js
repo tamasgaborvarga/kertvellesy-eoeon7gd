@@ -56,9 +56,20 @@
     themeBtn.classList.add("is-switching");
     setTimeout(function () { themeBtn.classList.remove("is-switching"); }, 1050);
     if (document.startViewTransition) {
+      // a kör középpontja a gomb; sugara a legtávolabbi képernyősarokig ér
+      var rb = themeBtn.getBoundingClientRect();
+      var cx = rb.left + rb.width / 2, cy = rb.top + rb.height / 2;
+      var rad = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       root.classList.add("theme-vt");
+      root.classList.toggle("theme-fade", still);
       var t = document.startViewTransition(function () { applyTheme(dark); });
-      t.finished.then(function () { root.classList.remove("theme-vt"); }, function () { root.classList.remove("theme-vt"); });
+      if (!still) t.ready.then(function () {
+        root.animate({ clipPath: ["circle(0px at " + cx + "px " + cy + "px)", "circle(" + rad + "px at " + cx + "px " + cy + "px)"] },
+          { duration: 760, easing: "cubic-bezier(.76, 0, .24, 1)", pseudoElement: "::view-transition-new(root)" });
+      }, function () {});
+      var done = function () { root.classList.remove("theme-vt", "theme-fade"); };
+      t.finished.then(done, done);
     } else {
       root.classList.add("theme-anim");
       applyTheme(dark);
