@@ -1,7 +1,7 @@
 /* Kertvéllesy intró — az eredeti logó kézírásként rajzolódik ki (≈2,6 s), majd 1 s alatt áttűnik az oldalba.
    Adat: window.KV_INTRO (a jóváhagyott nyomvonal + időzítés, intro/work/export_web.py).
    Csak a kezdőlapon, munkamenetenként egyszer; kattintásra/koppintásra/billentyűre átugorható;
-   csökkentett mozgásnál csak a kész logó látszik egy pillanatra. A végső képkocka = az eredeti logó. */
+   minden eszközön és beállítás mellett teljes egészében lefut. A végső képkocka = az eredeti logó. */
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -10,7 +10,6 @@
   if (!el || !D || !root.classList.contains("intro")) { if (el) el.remove(); root.classList.remove("intro"); return; }
   try { sessionStorage.setItem("kv-intro", "1"); } catch (err) { /* privát mód: minden alkalommal lefut, de átugorható */ }
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var NS = "http://www.w3.org/2000/svg";
   var svg = el.querySelector("svg");
   var mask = svg.querySelector("mask");
@@ -103,6 +102,7 @@
     window.addEventListener(ev, finish, { once: true, passive: true });
   });
 
-  if (reduce) { render(T.dur); setTimeout(finish, 600); }
-  else requestAnimationFrame(frame);
+  // A kézírás egy helyben rajzolódik ki (nincs nagy felületű elmozdulás, parallax) — ezért csökkentett mozgás
+  // beállítás mellett is teljes egészében lefut; bármikor átugorható.
+  requestAnimationFrame(frame);
 })();
