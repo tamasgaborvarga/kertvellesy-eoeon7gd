@@ -784,3 +784,35 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
   .pager-all { order: 2; grid-column: 1 / -1; justify-self: stretch; text-align: center; margin-top: 22px; padding-top: 14px;
     border-top: 1px solid var(--line); border-bottom: 0; display: flex; justify-content: center; align-items: center; min-height: 44px; }
 }
+
+/* ---------- lábléc: sötét záró sáv ----------
+   1) nagy kapcsolati felhívás  2) négy oszlop  3) vékony cégadat-sor. Sötét módban invertál (mint az idézetsáv). */
+.site-foot { background: var(--ink); color: var(--paper); padding-top: clamp(64px, 9vw, 136px); font-size: .95rem; }
+.site-foot .label, .site-foot .foot-h { color: var(--on-ink-2); }
+.site-foot a { text-decoration-color: var(--on-ink-line); }
+.site-foot a:hover { text-decoration-color: currentColor; }
+.foot-top { padding-bottom: clamp(48px, 6vw, 88px); }
+.foot-top .label { margin-bottom: 18px; }
+.foot-lead { font: 300 clamp(var(--t2), 3.2vw, var(--t4))/1.04 var(--display); letter-spacing: -.032em; max-width: 18ch; margin: 0; }
+.foot-cta { display: flex; flex-wrap: wrap; gap: 8px 48px; margin-top: clamp(28px, 4vw, 48px); }
+.foot-big { font: 300 clamp(1.35rem, 3.4vw, var(--t3))/1.15 var(--display); letter-spacing: -.03em; text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 6px;
+  transition: background-size .5s var(--ease); overflow-wrap: anywhere; }
+.foot-big:hover { background-size: 0 1px; background-position: 100% 100%; }
+.foot-grid { grid-template-columns: 1.3fr 1fr 1.2fr .8fr .9fr; padding-top: 28px; border-top: 1px solid var(--on-ink-line); }
+.foot-brand img { width: 150px; mix-blend-mode: normal; }
+.foot-more { margin-top: 6px; }
+.foot-grid p + .foot-h { margin-top: 24px; }
+.foot-base { color: var(--on-ink-2); border-top: 1px solid var(--on-ink-line); align-items: center; gap: 16px 32px; }
+.foot-legal { font: 400 var(--t-1)/1.6 var(--mono); letter-spacing: 0; flex: 1 1 420px; margin: 0; }
+.foot-top-link { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.foot-top-link::after { content: ""; width: 10px; height: 14px; background: currentColor;
+  -webkit-mask: var(--arrow) no-repeat center / 14px 10px; mask: var(--arrow) no-repeat center / 14px 10px; transform: rotate(-90deg); }
+.ginop-badge img { width: 180px; }
+@media (max-width: 1100px) { .foot-grid { grid-template-columns: repeat(3, 1fr); } .foot-brand { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-cta { flex-direction: column; } }
+@media (max-width: 560px) {
+  .foot-grid > div:nth-child(2), .foot-grid > div:nth-child(3) { grid-column: 1 / -1; }
+  .foot-grid > div:nth-child(3) .plain { columns: 1; }
+}
+.foot-big { display: inline-flex; align-items: flex-end; min-height: 44px; align-self: flex-start; }
