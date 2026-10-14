@@ -830,3 +830,19 @@ html.js[data-theme="dark"] .hero-pair img.hero-night { opacity: 1; }
 @media (max-width: 900px) {
   .hero-img img { height: auto; aspect-ratio: 4 / 3; min-height: 0; max-height: none; }
 }
+
+/* ---------- világos ↔ sötét: egyetlen lágy, egész oldalas áttűnés ----------
+   View Transitions: a régi téma pillanatképe átolvad az újba (.75s); közben minden elem együtt mozog.
+   Tartalék (Safari/Firefox): rövid ideig minden szín-, háttér- és vonaltulajdonság átúszik. */
+.theme-vt::view-transition-old(root), .theme-vt::view-transition-new(root) {
+  animation-duration: .75s; animation-timing-function: cubic-bezier(.4, 0, .2, 1); animation-delay: 0s; mix-blend-mode: normal; }
+/* a régi téma a helyén marad, az új ráolvad (a felső réteg) — így félúton nincs „besötétedés” */
+.theme-vt::view-transition-old(root) { animation: none; opacity: 1; }
+.theme-vt::view-transition-new(root) { animation-name: kv-theme-in; }
+@keyframes kv-theme-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes kv-theme-in { from { opacity: 0; } to { opacity: 1; } }
+.theme-vt::view-transition-group(*) { animation-duration: .75s; }
+.theme-vt .hero-pair .hero-night { transition: none; }
+html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+  transition: background-color .7s cubic-bezier(.4, 0, .2, 1), color .7s cubic-bezier(.4, 0, .2, 1),
+              border-color .7s cubic-bezier(.4, 0, .2, 1), opacity .7s cubic-bezier(.4, 0, .2, 1) !important; }
