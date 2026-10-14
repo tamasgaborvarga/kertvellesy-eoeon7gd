@@ -826,3 +826,7 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
 .js .hero-pair img.hero-night { opacity: 0; }
 html.js[data-theme="dark"] .hero-pair img.hero-night { opacity: 1; }
 @media (max-width: 900px) { .hero-pair img { object-position: 50% 50%; } }
+/* mobil/tablet heró: fekvő 4:3 arány a képernyőmagas kivágás helyett — kevésbé nagyít bele */
+@media (max-width: 900px) {
+  .hero-img img { height: auto; aspect-ratio: 4 / 3; min-height: 0; max-height: none; }
+}
