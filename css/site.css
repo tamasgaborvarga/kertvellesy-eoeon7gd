@@ -749,3 +749,26 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
   @keyframes kv-out { to { opacity: 0; } }
   @keyframes kv-in { from { opacity: 0; } }
 }
+
+/* lapozó: asztalin a címkék egy vonalban (felülre igazítva); mobilon egymás alatti, teljes szélességű sorok */
+.pager { align-items: start; }
+@media (max-width: 640px) {
+  .pager { grid-template-columns: 1fr; gap: 0; padding-top: 0; }
+  .pager a[rel] { grid-template-columns: 1fr auto; column-gap: 20px; row-gap: 4px; align-items: center;
+    padding: 16px 0; border-bottom: 1px solid var(--line); text-align: left; justify-items: start; min-height: 64px; }
+  .pager a[rel] .label { grid-column: 1; }
+  .pager a[rel] .pager-t { grid-column: 1; }
+  .pager a[rel]::after { content: ""; grid-column: 2; grid-row: 1 / span 2; width: 16px; height: 10px; background: currentColor;
+    -webkit-mask: var(--arrow) no-repeat center / contain; mask: var(--arrow) no-repeat center / contain; }
+  .pager a[rel="prev"]::after { transform: scaleX(-1); }
+  .pager-all { grid-row: auto; justify-self: start; margin-top: 18px; display: inline-flex; align-items: center; min-height: 44px; }
+}
+@media (max-width: 640px) { .pager a[rel="next"] { order: 1; } .pager-all { order: 2; } }
+
+/* ---------- a logó zöldje (#A7B537) — csak három, visszafogott helyen ----------
+   2:1 kontraszt a papíron → sosem szöveg/gomb/fókusz; csak vonal és jelölés.
+   1) menüpont aktív/hover aláhúzás  2) a feliratok előtti rövid vonal  3) szövegkijelölés */
+.nav-top::after { background: var(--lime); height: 1.5px; }
+.eyebrow::before { background: var(--lime); height: 1.5px; }
+::selection { background: rgba(167, 181, 55, .38); color: var(--ink); }
+[data-theme="dark"] ::selection { background: rgba(167, 181, 55, .45); color: #FFFFFF; }
