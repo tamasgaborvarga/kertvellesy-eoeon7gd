@@ -123,6 +123,34 @@
     desktop.addEventListener("change", function () { items.forEach(function (it) { setSub(it, false); }); closeAll(); });
   }
 
+  /* --- oldalak közötti átnövés (View Transitions): csak a megkattintott kártya képe kap nevet,
+         így egyetlen kép nő át a projektoldal fő képévé; visszafelé a saját kártyájába húzódik --- */
+  if (!reduce && "onpagereveal" in window) {
+    var VT = "proj-lead";
+    document.addEventListener("click", function (ev) {
+      var a = ev.target.closest(".card a, .hero-img");
+      if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
+      var img = a.querySelector("img");
+      if (img) img.style.viewTransitionName = VT;
+    });
+    // projektoldalról vissza: a lista/kezdőlap azon kártyája kapja a nevet, ahonnan jöttünk
+    var proj = document.querySelector(".project[data-slug]");
+    if (proj) { try { sessionStorage.setItem("kv-last", proj.getAttribute("data-slug")); } catch (err) { /* */ } }
+    window.addEventListener("pagereveal", function (ev) {
+      if (!ev.viewTransition || proj) return;
+      var last = null;
+      try { last = sessionStorage.getItem("kv-last"); } catch (err) { /* */ }
+      var card = last && document.querySelector('.card[data-slug="' + last + '"] img');
+      if (!card) return;
+      card.style.viewTransitionName = VT;
+      ev.viewTransition.finished.then(function () { card.style.viewTransitionName = ""; });
+    });
+    // böngésző „vissza”: a régi oldal képe ne maradjon névvel (bfcache)
+    window.addEventListener("pageshow", function () {
+      document.querySelectorAll('.card img, .hero-img img').forEach(function (i) { i.style.viewTransitionName = ""; });
+    });
+  }
+
   /* --- megjelenés görgetéskor --- */
   var revealEls = document.querySelectorAll("[data-reveal]");
   if (!reduce && "IntersectionObserver" in window) {
