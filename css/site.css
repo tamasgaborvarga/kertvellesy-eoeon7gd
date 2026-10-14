@@ -816,3 +816,13 @@ dl.titleblock dd, dl.titleblock div:first-child dd { padding: 0; border: 0; font
   .foot-grid > div:nth-child(3) .plain { columns: 1; }
 }
 .foot-big { display: inline-flex; align-items: flex-end; min-height: 44px; align-self: flex-start; }
+
+/* heró: nappali/éjszakai képpár — világos módban a nappali, sötétben az éjszakai; váltáskor lassú áttűnés */
+.hero-pair { position: relative; }
+.hero-pair .hero-night { position: absolute; inset: 0; opacity: 0; transition: opacity .9s var(--ease); }
+[data-theme="dark"] .hero-pair .hero-night { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .hero-pair .hero-night { transition: none; } }
+/* a betöltéskori beúsztatás (.lz.ok) ne írja felül a téma szerinti láthatóságot */
+.js .hero-pair img.hero-night { opacity: 0; }
+html.js[data-theme="dark"] .hero-pair img.hero-night { opacity: 1; }
+@media (max-width: 900px) { .hero-pair img { object-position: 50% 50%; } }
