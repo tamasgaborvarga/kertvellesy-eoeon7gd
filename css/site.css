@@ -846,3 +846,4 @@ html.js[data-theme="dark"] .hero-pair img.hero-night { opacity: 1; }
 html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
   transition: background-color 1s cubic-bezier(.65, 0, .35, 1), color 1s cubic-bezier(.65, 0, .35, 1),
               border-color 1s cubic-bezier(.65, 0, .35, 1), opacity 1s cubic-bezier(.65, 0, .35, 1) !important; }
+.hero-cap-static { margin: 0; cursor: default; }
