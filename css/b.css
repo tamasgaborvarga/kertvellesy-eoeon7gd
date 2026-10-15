@@ -797,3 +797,5 @@ html.vb.theme-vt.theme-fade::view-transition-new(root) { animation: b-theme-fade
 .vb .b-lang-menu { margin-top: 16px; margin-left: -12px; }
 .vb .b-lang-foot { margin-inline: -12px; }
 .vb .b-tr-note { margin-top: 18px; color: var(--muted); }
+/* mobilon a menüben nincs cím + nyitvatartás sor (a user kérése; a láblécben és a Kapcsolat oldalon megvan) */
+@media (max-width: 700px) { .vb .b-menu-contact > p.label { display: none; } }
