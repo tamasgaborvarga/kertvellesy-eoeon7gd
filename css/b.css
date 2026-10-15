@@ -291,13 +291,16 @@ html.vb[data-theme="dark"] .b-hero-media img.b-hero-night { opacity: 1; }   /* v
 .vb .b-facts-row > div:last-child { border-bottom: 0; }
 .vb .b-facts-row dt { grid-column: 1; grid-row: 1; color: var(--muted); }
 .vb .b-facts-row dd { margin: 0; }
+/* a nagy szám belső elemei is a címbetűt öröklik (a „body *” Satoshi-szabály ne írja felül); a pörgő másolat nem jelölhető ki */
+.vb .display * { font-family: inherit; font-weight: inherit; }
+.vb .b-facts [data-spin] { -webkit-user-select: none; user-select: none; }
 .vb .b-facts-row dd.label { grid-column: 1; grid-row: 2; color: var(--ink); letter-spacing: .12em; }
 .vb .b-facts-row dd.label a { text-decoration: none; border-bottom: 1px solid var(--line-strong); }
 @media (max-width: 860px) { .vb .b-facts-row dd.label a { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 0; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: .3em; } }
-.vb .b-facts .vh + .display, .vb .b-facts .display { grid-column: 2; grid-row: 1 / span 2; font-weight: 200; font-size: clamp(4.5rem, 12vw, 13.5rem); line-height: .82; letter-spacing: -.045em; font-variant-numeric: lining-nums; }
+.vb .b-facts .vh + .display, .vb .b-facts .display { grid-column: 2; grid-row: 1 / span 2; font-weight: 200; font-size: clamp(4.5rem, 7.5vw, 8.5rem); line-height: .82; letter-spacing: -.045em; font-variant-numeric: lining-nums; }
 @media (min-width: 900px) {
   .vb .b-facts-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .vb .b-facts-row > div { grid-template-columns: 1fr; align-content: space-between; min-height: clamp(260px, 28vw, 400px); padding: 26px var(--b-g) 28px; border-bottom: 0; border-left: 1px solid var(--line); }
+  .vb .b-facts-row > div { grid-template-columns: 1fr; align-content: space-between; min-height: clamp(220px, 20vw, 290px); padding: 26px var(--b-g) 28px; border-bottom: 0; border-left: 1px solid var(--line); }
   .vb .b-facts-row > div:first-child { padding-left: 0; border-left: 0; }
   .vb .b-facts .display { grid-column: 1; grid-row: 2; margin-top: auto; }
   .vb .b-facts-row dd.label { grid-row: 3; margin-top: 14px; }
