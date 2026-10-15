@@ -752,19 +752,11 @@ html.b-no-anim *, html.b-no-anim *::before, html.b-no-anim *::after { transition
 /* ---------- témaváltó: nap ↔ hold ikon + körben szétterülő új téma ----------
    Világos: nap (mag + 8 sugár). Sötét: hold (nagyobb mag, a kivágás sarlóvá formálja, a sugarak behúzódnak). */
 .vb .b-theme { width: 44px; height: 44px; display: inline-grid; place-items: center; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; border-radius: 50%; }
-.vb .b-tt { display: block; overflow: visible; transition: transform .7s cubic-bezier(.65, 0, .35, 1); }
-.vb .b-tt-core, .vb .b-tt-cut, .vb .b-tt-rays { transform-box: view-box; transform-origin: 12px 12px; }
-.vb .b-tt-core { transform: scale(1); transition: transform .7s cubic-bezier(.65, 0, .35, 1); }
-.vb .b-tt-cut { transform: translate(11px, -11px) scale(.9); transition: transform .7s cubic-bezier(.65, 0, .35, 1); }
-.vb .b-tt-rays { transform: rotate(0) scale(1); opacity: 1; transition: transform .7s cubic-bezier(.65, 0, .35, 1), opacity .45s cubic-bezier(.65, 0, .35, 1); }
-html.vb[data-theme="dark"] .b-tt { transform: rotate(-24deg); }
-html.vb[data-theme="dark"] .b-tt-core { transform: scale(1.62); }
-html.vb[data-theme="dark"] .b-tt-cut { transform: translate(4.6px, -4.2px) scale(1); }
-html.vb[data-theme="dark"] .b-tt-rays { transform: rotate(90deg) scale(.4); opacity: 0; transition-delay: 0s, 0s; }
-html.vb:not([data-theme="dark"]) .b-tt-rays { transition-delay: .12s, .12s; }
-@media (hover: hover) { .vb .b-theme:hover .b-tt { transform: rotate(18deg); } html.vb[data-theme="dark"] .b-theme:hover .b-tt { transform: rotate(-42deg); } }
+/* minimál váltó: vékony kör, egyik fele kitöltve; sötétben 180°-ot fordul */
+.vb .b-tt { display: block; transition: transform .6s cubic-bezier(.65, 0, .35, 1); }
+html.vb[data-theme="dark"] .b-tt { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .vb .b-tt { transition-duration: .01s; } }
 .vb .b-theme:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .vb .b-tt, .vb .b-tt-core, .vb .b-tt-cut, .vb .b-tt-rays { transition-duration: .2s !important; } }
 
 /* az új téma a gomb középpontjából kör alakban terül szét (View Transitions; a kör a JS-ből kapja a helyét) */
 html.vb.theme-vt::view-transition-old(root), html.vb.theme-vt::view-transition-new(root) { animation: none; mix-blend-mode: normal; opacity: 1; }
