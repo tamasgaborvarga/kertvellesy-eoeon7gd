@@ -126,12 +126,21 @@
     new MutationObserver(function () { requestAnimationFrame(paint); }).observe(root, { attributes: true, attributeFilter: ["class"] });
   }
 
+  /* --- sáv nyelvválasztója (<details>): kívülre kattintás és Escape zár --- */
+  var dd = document.querySelector(".b-lang-dd");
+  if (dd) {
+    document.addEventListener("click", function (ev) { if (dd.open && !dd.contains(ev.target)) dd.open = false; });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && dd.open) { ev.stopImmediatePropagation(); dd.open = false; dd.querySelector("summary").focus(); }
+    }, true);
+  }
+
   /* --- teljes képernyős menü: fókusz a menüben marad, Escape zár, a tételhez tartozó kép átúszik --- */
   if (menuEl && menuBtn) {
     var label = menuBtn.querySelector(".b-menu-l");
     var focusables = function () {
       return [menuBtn].concat(Array.prototype.slice.call(menuEl.querySelectorAll("a[href]")))
-        .concat(Array.prototype.slice.call(bar.querySelectorAll(".b-brand, .b-bar-cta, .b-lang-bar a, .theme-toggle")))
+        .concat(Array.prototype.slice.call(bar.querySelectorAll(".b-brand, .b-bar-cta, .b-lang-dd summary, .theme-toggle")))
         .filter(function (el) { return el.offsetParent !== null || el === menuBtn; });
     };
     var setMenu = function (open, viaKeyboard) {

@@ -772,7 +772,24 @@ html.vb.theme-vt.theme-fade::view-transition-new(root) { animation: b-theme-fade
 .vb .b-lang a:hover, .vb .b-lang a[aria-current] { opacity: 1; }
 .vb .b-lang a::after { content: ""; position: absolute; left: 12px; right: calc(12px - .14em); bottom: 10px; height: 1.5px; background: #A7B537; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--b-ease); }
 .vb .b-lang a:hover::after, .vb .b-lang a[aria-current]::after { transform: scaleX(1); }
-.vb .b-lang-bar { margin-right: -6px; }
+/* sáv: legördülő nyelvválasztó */
+.vb .b-lang-dd { position: relative; }
+.vb .b-lang-dd summary { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 6px; list-style: none; cursor: pointer;
+  font-family: var(--b-text); font-size: .75rem; font-weight: 500; letter-spacing: .14em; }
+.vb .b-lang-dd summary::-webkit-details-marker { display: none; }
+.vb .b-dd-chev { width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .3s var(--b-ease); }
+.vb .b-lang-dd[open] .b-dd-chev { transform: translateY(1px) rotate(-135deg); }
+.vb .b-lang-dd summary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.vb .b-dd-list { position: absolute; top: calc(100% + 6px); right: 0; min-width: 168px; margin: 0; padding: 6px 0; list-style: none;
+  background: var(--paper); color: var(--ink); border: 1px solid var(--line-strong); }
+.vb .b-bar.on-dark .b-dd-list { background: var(--b-night); color: #F1EEE8; border-color: rgba(241, 238, 232, .22); }
+.vb .b-dd-list a { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; padding: 0 16px;
+  font-family: var(--b-text); font-size: .875rem; text-decoration: none; color: inherit; }
+.vb .b-dd-list a:hover { background: rgba(127, 127, 120, .12); }
+.vb .b-dd-list a[aria-current] .b-dd-name { text-decoration: underline; text-decoration-color: #A7B537; text-decoration-thickness: 1.5px; text-underline-offset: .35em; }
+.vb .b-dd-code { font-size: .6875rem; font-weight: 500; letter-spacing: .14em; opacity: .55; }
+@media (prefers-reduced-motion: no-preference) { .vb .b-lang-dd[open] .b-dd-list { animation: b-dd-in .25s var(--b-ease); } }
+@keyframes b-dd-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (max-width: 700px) { .vb .b-lang-bar { display: none; } }
 .vb .b-lang-menu { margin-top: 16px; margin-left: -12px; }
 .vb .b-lang-foot { margin-inline: -12px; }
