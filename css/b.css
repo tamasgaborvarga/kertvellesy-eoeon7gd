@@ -772,3 +772,16 @@ html.vb.theme-vt::view-transition-old(root) { z-index: 1; }
 html.vb.theme-vt::view-transition-new(root) { z-index: 2; }
 html.vb.theme-vt.theme-fade::view-transition-new(root) { animation: b-theme-fade .32s ease both; }
 @keyframes b-theme-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* --- nyelvváltó (HU · EN · DE): sávban asztalon, a teljes képernyős menüben és a láblécben mindig --- */
+.vb .b-lang ul { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.vb .b-lang a { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 6px;
+  font-family: var(--b-text); font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-decoration: none; color: inherit; opacity: .62; transition: opacity .3s; }
+.vb .b-lang a:hover, .vb .b-lang a[aria-current] { opacity: 1; }
+.vb .b-lang a::after { content: ""; position: absolute; left: 12px; right: calc(12px - .14em); bottom: 10px; height: 1.5px; background: #A7B537; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--b-ease); }
+.vb .b-lang a:hover::after, .vb .b-lang a[aria-current]::after { transform: scaleX(1); }
+.vb .b-lang-bar { margin-right: -6px; }
+@media (max-width: 700px) { .vb .b-lang-bar { display: none; } }
+.vb .b-lang-menu { margin-top: 16px; margin-left: -12px; }
+.vb .b-lang-foot { margin-inline: -12px; }
+.vb .b-tr-note { margin-top: 18px; color: var(--muted); }

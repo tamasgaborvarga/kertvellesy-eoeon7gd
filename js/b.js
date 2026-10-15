@@ -4,6 +4,13 @@
   "use strict";
   var root = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* nyelv: a <html lang> szerint — a szöveg- és URL-paraméter-párok a build_b.py-val (QP) egyeznek */
+  var LS = {
+    hu: { light: "Világos mód", dark: "Sötét mód", menu: "Menü", close: "Bezárás", type: "tipus", style: "stilus", view: "nezet", list: "lista" },
+    en: { light: "Light mode", dark: "Dark mode", menu: "Menu", close: "Close", type: "type", style: "style", view: "view", list: "list" },
+    de: { light: "Heller Modus", dark: "Dunkler Modus", menu: "Menü", close: "Schließen", type: "typ", style: "stil", view: "ansicht", list: "liste" }
+  };
+  var L = LS[(root.lang || "hu").slice(0, 2)] || LS.hu;
 
   /* --- képek: a domináns szín áll a helyén, betöltéskor beúszik --- */
   document.querySelectorAll("img.lz").forEach(function (img) {
@@ -19,8 +26,8 @@
     if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
     if (themeBtn) {
       themeBtn.setAttribute("aria-pressed", String(dark));
-      themeBtn.querySelector(".vh").textContent = dark ? "Világos mód" : "Sötét mód";
-      themeBtn.title = dark ? "Világos mód" : "Sötét mód";
+      themeBtn.querySelector(".vh").textContent = dark ? L.light : L.dark;
+      themeBtn.title = dark ? L.light : L.dark;
     }
     if (metaTheme) metaTheme.setAttribute("content", dark ? "#121311" : "#EEEBE5");
   };
@@ -124,12 +131,12 @@
     var label = menuBtn.querySelector(".b-menu-l");
     var focusables = function () {
       return [menuBtn].concat(Array.prototype.slice.call(menuEl.querySelectorAll("a[href]")))
-        .concat(Array.prototype.slice.call(bar.querySelectorAll(".b-brand, .b-bar-cta, .theme-toggle")))
+        .concat(Array.prototype.slice.call(bar.querySelectorAll(".b-brand, .b-bar-cta, .b-lang-bar a, .theme-toggle")))
         .filter(function (el) { return el.offsetParent !== null || el === menuBtn; });
     };
     var setMenu = function (open, viaKeyboard) {
       menuBtn.setAttribute("aria-expanded", String(open));
-      if (label) label.textContent = open ? "Bezárás" : "Menü";
+      if (label) label.textContent = open ? L.close : L.menu;
       menuEl.classList.toggle("open", open);
       root.classList.toggle("menu-open", open);
       menuEl.setAttribute("aria-hidden", String(!open));
@@ -326,9 +333,9 @@
       if (write === false) return;
       try {
         var q = new URLSearchParams();
-        if (state.type) q.set("tipus", state.type);
-        if (state.style) q.set("stilus", state.style);
-        if (state.view === "list") q.set("nezet", "lista");
+        if (state.type) q.set(L.type, state.type);
+        if (state.style) q.set(L.style, state.style);
+        if (state.view === "list") q.set(L.view, L.list);
         var s = q.toString();
         history.replaceState(null, "", s ? "?" + s : location.pathname);
       } catch (err) { /* file:// */ }
@@ -355,9 +362,9 @@
     try {
       var params = new URLSearchParams(location.search);
       var valid = function (name, v) { return v && filters.querySelector('[data-filter="' + name + '"][data-value="' + CSS.escape(v) + '"]'); };
-      if (valid("type", params.get("tipus"))) press("type", params.get("tipus"));
-      if (valid("style", params.get("stilus"))) press("style", params.get("stilus"));
-      if (params.get("nezet") === "lista") state.view = "list";
+      if (valid("type", params.get(L.type))) press("type", params.get(L.type));
+      if (valid("style", params.get(L.style))) press("style", params.get(L.style));
+      if (params.get(L.view) === L.list) state.view = "list";
     } catch (err) { /* */ }
     apply(false);
 
